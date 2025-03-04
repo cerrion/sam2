@@ -32,14 +32,12 @@ RUN pip install --upgrade pip setuptools
 RUN pip install -e ".[interactive-demo]"
 
 # https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite/issues/69#issuecomment-1826764707
-RUN rm /opt/conda/bin/ffmpeg && ln -s /bin/ffmpeg /opt/conda/bin/ffmpeg
+# RUN rm /opt/conda/bin/ffmpeg && ln -s /bin/ffmpeg /opt/conda/bin/ffmpeg
+RUN ln -s /bin/ffmpeg /opt/conda/bin/ffmpeg
 
 # Make app directory. This directory will host all files required for the
 # backend and SAM 2 inference files.
 RUN mkdir ${APP_ROOT}
-
-# Copy backend server files
-COPY demo/backend/server ${APP_ROOT}/server
 
 # Copy SAM 2 inference files
 COPY sam2 ${APP_ROOT}/server/sam2
@@ -50,14 +48,18 @@ ADD https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_small.
 ADD https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_base_plus.pt ${APP_ROOT}/checkpoints/sam2.1_hiera_base_plus.pt
 ADD https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_large.pt ${APP_ROOT}/checkpoints/sam2.1_hiera_large.pt
 
+# Copy backend server files
+COPY demo/backend/server ${APP_ROOT}/server
+
 WORKDIR ${APP_ROOT}/server
 
 # https://pythonspeed.com/articles/gunicorn-in-docker/
 CMD gunicorn --worker-tmp-dir /dev/shm \
     --worker-class gthread app:app \
     --log-level info \
-    --access-logfile /dev/stdout \
-    --log-file /dev/stderr \
+    --access-logfile - \
+    --error-logfile - \
+    --capture-output \
     --workers ${GUNICORN_WORKERS} \
     --threads ${GUNICORN_THREADS} \
     --bind 0.0.0.0:${GUNICORN_PORT} \

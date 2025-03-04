@@ -17,6 +17,7 @@ services:
     volumes:
       - ./demo/data/:/data/:rw
     environment:
+      - MODEL_SIZE=base_plus
       - SERVER_ENVIRONMENT=DEV
       - GUNICORN_WORKERS=1
       # Inference API needs to have at least 2 threads to handle an incoming

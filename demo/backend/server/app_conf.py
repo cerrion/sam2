@@ -7,6 +7,7 @@ import logging
 import os
 from pathlib import Path
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 APP_ROOT = os.getenv("APP_ROOT", "/opt/sam2")
@@ -15,7 +16,7 @@ API_URL = os.getenv("API_URL", "http://localhost:7263")
 
 MODEL_SIZE = os.getenv("MODEL_SIZE", "base_plus")
 
-logger.info(f"using model size {MODEL_SIZE}")
+logger.info("using model size: %s", MODEL_SIZE)
 
 FFMPEG_NUM_THREADS = int(os.getenv("FFMPEG_NUM_THREADS", "1"))
 
