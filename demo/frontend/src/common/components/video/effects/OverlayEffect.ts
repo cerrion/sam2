@@ -70,7 +70,7 @@ export default class OverlayEffect extends BaseGLEffect {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    const opacity = [0.5, 1.0][this.variant];
+    const opacity = [0.5, 1.0][this.variant % this.numVariants];
     gl.uniform1f(
       gl.getUniformLocation(program, 'uTime'),
       context.timeParameter ?? 1.5, // Pass a constant value when no time parameter
