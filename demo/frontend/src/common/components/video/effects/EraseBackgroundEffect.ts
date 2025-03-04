@@ -20,7 +20,6 @@ import {AbstractEffect, EffectFrameContext} from './Effect';
 export default class EraseBackgroundEffect extends AbstractEffect {
   constructor() {
     super(3);
-    this.variant = 2;
   }
 
   apply(

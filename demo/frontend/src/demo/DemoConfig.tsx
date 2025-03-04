@@ -37,7 +37,7 @@ export const INFERENCE_API_ENDPOINT = 'http://localhost:7263';
 export const demoObjectLimit = 5;
 
 export const DEFAULT_EFFECT_LAYERS: EffectLayers = {
-  background: 'EraseBackground',
+  background: 'Original',
   highlight: 'Overlay',
 };
 
