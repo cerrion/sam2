@@ -96,8 +96,8 @@ export type EffectsCombo = [EffectComboItem, EffectComboItem];
 
 export const effectPresets: EffectsCombo[] = [
   [
-    {name: 'Original', variant: 0},
-    {name: 'Overlay', variant: 0},
+    {name: 'EraseBackground', variant: 0},
+    {name: 'Overlay', variant: 7},
   ],
   [
     {name: 'Desaturate', variant: 0},

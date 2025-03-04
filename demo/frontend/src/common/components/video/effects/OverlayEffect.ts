@@ -44,7 +44,6 @@ export default class OverlayEffect extends BaseGLEffect {
     super(8);
     this.vertexShaderSource = vertexShaderSource;
     this.fragmentShaderSource = fragmentShaderSource;
-    this.variant = 7;
   }
 
   protected setupUniforms(
