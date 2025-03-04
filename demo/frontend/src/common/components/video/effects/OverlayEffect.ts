@@ -41,10 +41,9 @@ export default class OverlayEffect extends BaseGLEffect {
   private _activeMask: number = 0;
 
   constructor() {
-    super(8);
+    super(2);
     this.vertexShaderSource = vertexShaderSource;
     this.fragmentShaderSource = fragmentShaderSource;
-    this.variant = 7;
   }
 
   protected setupUniforms(
@@ -71,7 +70,7 @@ export default class OverlayEffect extends BaseGLEffect {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    const opacity = [0.5, 1.0, 0.35, 0.75][this.variant % 4];
+    const opacity = [0.5, 1.0][this.variant];
     gl.uniform1f(
       gl.getUniformLocation(program, 'uTime'),
       context.timeParameter ?? 1.5, // Pass a constant value when no time parameter
@@ -80,7 +79,7 @@ export default class OverlayEffect extends BaseGLEffect {
     gl.uniform1i(this._numMasksUniformLocation, context.masks.length);
     gl.uniform1i(
       gl.getUniformLocation(program, 'uBorder'),
-      this.variant % this.numVariants < 4 ? 0 : 1,
+      this.variant % this.numVariants < 1 ? 1 : 0,
     );
 
     if (context.actionPoint) {
