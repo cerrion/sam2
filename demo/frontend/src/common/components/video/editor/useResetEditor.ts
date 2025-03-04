@@ -49,7 +49,7 @@ export default function useResetEditor(): State {
 
   const resetEffects = useCallback(() => {
     video?.setEffect(DEFAULT_EFFECT_LAYERS.background, 0, {variant: 0});
-    video?.setEffect(DEFAULT_EFFECT_LAYERS.highlight, 1, {variant: 0});
+    video?.setEffect(DEFAULT_EFFECT_LAYERS.highlight, 1, {variant: 7});
   }, [video]);
 
   const resetEditor = useCallback(() => {

@@ -126,7 +126,7 @@ export default class VideoWorkerContext {
 
   constructor() {
     this._effects = [
-      AllEffects.EraseBackground, // Black background
+      AllEffects.Original, // Image as background
       AllEffects.Overlay, // Masks on top
     ];
 
