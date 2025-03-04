@@ -39,5 +39,5 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              device_ids: ['1']
               capabilities: [gpu]
