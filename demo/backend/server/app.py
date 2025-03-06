@@ -121,19 +121,17 @@ class MyGraphQLView(GraphQLView):
 # Add GraphQL route to Flask app.
 app.add_url_rule(
     "/graphql",
-    view_func=cross_origin(
-        MyGraphQLView.as_view(
-            "graphql_view",
-            schema=schema,
-            # Disable GET queries
-            # https://strawberry.rocks/docs/operations/deployment
-            # https://strawberry.rocks/docs/integrations/flask
-            allow_queries_via_get=False,
-            # Strawberry recently changed multipart request handling, which now
-            # requires enabling support explicitly for views.
-            # https://github.com/strawberry-graphql/strawberry/issues/3655
-            multipart_uploads_enabled=True,
-        )
+    view_func=MyGraphQLView.as_view(
+        "graphql_view",
+        schema=schema,
+        # Disable GET queries
+        # https://strawberry.rocks/docs/operations/deployment
+        # https://strawberry.rocks/docs/integrations/flask
+        allow_queries_via_get=False,
+        # Strawberry recently changed multipart request handling, which now
+        # requires enabling support explicitly for views.
+        # https://github.com/strawberry-graphql/strawberry/issues/3655
+        multipart_uploads_enabled=True,
     ),
 )
 
