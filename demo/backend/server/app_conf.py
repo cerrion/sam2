@@ -13,9 +13,9 @@ logger = logging.getLogger(__name__)
 APP_ROOT = os.getenv("APP_ROOT", "/opt/sam2")
 
 API_URL = os.getenv("API_URL", "http://localhost:7263")
+logger.info("using api entrypoint: %s", API_URL)
 
 MODEL_SIZE = os.getenv("MODEL_SIZE", "base_plus")
-
 logger.info("using model size: %s", MODEL_SIZE)
 
 FFMPEG_NUM_THREADS = int(os.getenv("FFMPEG_NUM_THREADS", "1"))
