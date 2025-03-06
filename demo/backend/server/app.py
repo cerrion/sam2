@@ -27,7 +27,7 @@ from strawberry.flask.views import GraphQLView
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-cors = CORS(app, supports_credentials=True, resources={r"/graphql": {"origins": "https://10.4.0.28:7262"}})
+cors = CORS(app, supports_credentials=True)
 
 videos = preload_data()
 set_videos(videos)
