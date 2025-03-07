@@ -135,10 +135,10 @@ def normalize_video(
     # rescale to max_w:max_h if needed & preserve aspect ratio
     r = w / h
     if r < 1:
-        h = min(720, h)
+        h = min(max_h, h)
         w = h * r
     else:
-        w = min(1280, w)
+        w = min(max_w, w)
         h = w / r
 
     # h264 cannot encode w/ odd dimensions
