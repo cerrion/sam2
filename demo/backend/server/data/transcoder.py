@@ -42,6 +42,7 @@ def transcode(
     codec = os.environ.get("VIDEO_ENCODE_CODEC", "libx264")
     crf = int(os.environ.get("VIDEO_ENCODE_CRF", "23"))
     fps = int(os.environ.get("VIDEO_ENCODE_FPS", "24"))
+    fps = None if fps < 0 else fps
     max_w = int(os.environ.get("VIDEO_ENCODE_MAX_WIDTH", "1280"))
     max_h = int(os.environ.get("VIDEO_ENCODE_MAX_HEIGHT", "720"))
     verbose = ast.literal_eval(os.environ.get("VIDEO_ENCODE_VERBOSE", "False"))
@@ -82,9 +83,7 @@ def get_video_metadata(path: str) -> VideoMetadata:
             fps = float(video_stream.guessed_rate)
             fps_avg = video_stream.average_rate
             if video_stream.duration is not None:
-                video_duration_sec = float(
-                    video_stream.duration * video_stream.time_base
-                )
+                video_duration_sec = float(video_stream.duration * video_stream.time_base)
             if fps is None:
                 fps = float(fps_avg)
 
@@ -121,7 +120,7 @@ def normalize_video(
     in_metadata: Optional[VideoMetadata],
     codec: str = "libx264",
     crf: int = 23,
-    fps: int = 24,
+    fps: int | None = 24,
     verbose: bool = False,
 ):
     if in_metadata is None:
@@ -151,6 +150,7 @@ def normalize_video(
         h += 1
 
     ffmpeg = shutil.which("ffmpeg")
+    fps_filter = f"fps={fps}," if fps is not None else ""
     cmd = [
         ffmpeg,
         "-threads",
@@ -164,7 +164,7 @@ def normalize_video(
         "-threads",
         f"{FFMPEG_NUM_THREADS}",  # decode (or filter..?) threads
         "-vf",
-        f"fps={fps},scale={w}:{h},setsar=1:1",
+        f"{fps_filter}scale={w}:{h},setsar=1:1",
         "-c:v",
         codec,
         "-crf",
